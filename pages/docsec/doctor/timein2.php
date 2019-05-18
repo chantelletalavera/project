@@ -1,0 +1,28 @@
+<?php
+   include 'session.php';
+   include '../../../connection.php';
+   include 'timezone.php';
+
+          $casenum = $_GET['case'];
+          $patient = $_GET['patient'];
+          $doc = $_SESSION['id'];
+   
+           $query2 = $conn->query("SELECT * FROM `tbl_diagnosis` WHERE fld_casenumber = '$casenum' AND fld_patientID = '$patient' AND fld_doctorname = '$doc' AND fld_status = '0'");
+             
+             if (mysqli_num_rows($query2) > 0) {
+                         while ($row = $query2->fetch_assoc()) {
+                           $patientID = $row['fld_patientID'];
+                           $case = $row['fld_casenumber'];
+                         }
+           $date_now = date('Y-m-d');
+   
+             $sql = "INSERT INTO tbl_timerecord (fld_patientID, fld_date, fld_timein,fld_userlevel) VALUES ('$patientID', '$date_now', NOW(), '".$_SESSION['id']."')";
+               $conn->query($sql);
+   
+   
+                echo "<script>window.location = 'info.php?id=$patient&case=$casenum';</script>";
+   
+           }
+
+   
+   ?>
