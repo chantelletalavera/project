@@ -33,12 +33,22 @@ include '../../connection.php';
               </a>
         </div>
            
-    <form method = "POST" action = "timein.php">
+    <form>
         <div class="box-body">
-        <label class="col-sm-5 control-label" style = "font-size: 20px; color:black;">Enter Patient ID </label>
+        <label class="col-sm-5 control-label" style = "font-size: 20px; color:black;">Enter Patient ID or Name </label>
         <div class="col-sm-10" style = "margin-top:0px;">
-                    <input type = "text" style = "font-family: Arial;" name = "patient" class = "form-control" autofocus required>
+                    <input type = "text" style = "font-family: Arial;" id = "patient" name = "patient" class = "form-control" autofocus required>
           </div>
+
+          <table id = "tblSearchResults" class="table table-bordered table-striped" width = "100%" cellspacing = "0">
+            <thead>
+              <th>Patient ID</th>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Date of Birth</th>
+              <th>Address</th>
+            </thead>
+          </table>
         </div>
 
 
@@ -64,4 +74,35 @@ include '../../connection.php';
     reserved.
   </footer>
 
+    
     <script src="../../sweet-alert/dist/sweetalert-dev.js"></script>
+    <script src="../../assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script type = "text/javascript">
+      var tblSearchResults = $('#tblSearchResults').DataTable({
+        ajax:{
+            url: 'search-patient.php?q=all',
+            dataSrc: '',
+            serverside: true
+        },
+        columns: [
+          {'data':'fld_patientID'},
+          {'data':'name',
+              render:function(data,type,name,meta){
+                  return name.fld_patientfname + ' ' + name.fld_patientlname;
+              }
+          },
+          {'data':'fld_patientgender'},
+          {'data':'fld_patientdob'},
+          {'data':'fld_patientaddress'}
+        ],
+        pageLength: 5,
+        deferRender: true
+    });
+
+      $(document).on('input','#patient',function(e){
+        e.preventDefault();
+
+        tblSearchResults.ajax.url('search-patient.php?q=search&patient='+$(this).val()).load();
+      });
+    </script>
