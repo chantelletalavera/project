@@ -7,7 +7,7 @@ include '../../connection.php';
 <style type="text/css">
   
   .fix{
-    margin-top:150px;
+    margin-top:0px;
   }
 
 </style>
@@ -35,9 +35,9 @@ include '../../connection.php';
            
     <form>
         <div class="box-body">
-        <label class="col-sm-5 control-label" style = "font-size: 20px; color:black;">Enter Patient ID or Name </label>
+        <label class="col-sm-5 control-label" style = "font-size: 20px; color:black;"></label>
         <div class="col-sm-10" style = "margin-top:0px;">
-                    <input type = "text" style = "font-family: Arial;" id = "patient" name = "patient" class = "form-control" autofocus required>
+                    <input type = "text" style = "font-family: Arial;" id = "patient" name = "patient" class = "form-control" placeholder = "Search....." autofocus required>
           </div>
 
           <table id = "tblSearchResults" class="table table-bordered table-striped" width = "100%" cellspacing = "0">
@@ -89,7 +89,7 @@ include '../../connection.php';
           {'data':'fld_patientID'},
           {'data':'name',
               render:function(data,type,name,meta){
-                  return name.fld_patientfname + ' ' + name.fld_patientlname;
+                  return name.fld_patientfname + ' ' + name.fld_patientmname + ' ' + name.fld_patientlname;
               }
           },
           {'data':'fld_patientgender'},
