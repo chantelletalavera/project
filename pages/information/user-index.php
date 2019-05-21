@@ -33,7 +33,7 @@ include '../../connection.php';
               </a>
         </div>
            
-    <form>
+    <form method="POST">
         <div class="box-body">
         <label class="col-sm-5 control-label" style = "font-size: 20px; color:black;"></label>
         <div class="col-sm-10" style = "margin-top:0px;">
@@ -98,6 +98,7 @@ include '../../connection.php';
         ],
         pageLength: 5,
         deferRender: true
+
     });
 
       $(document).on('input','#patient',function(e){
